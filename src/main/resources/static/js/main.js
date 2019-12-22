@@ -7,7 +7,6 @@ var chartData = [ null ];
 var barData = [ 0, 0, 0, 0, 0, 0, 0, 0 ];
 var lineChart;
 var barChart;
-var maxNum = 0;
 
 $(document).ready(function() {
 	start();
@@ -203,14 +202,7 @@ function chart() {
 	$.ajax({
 		url : "graph",
 		type : "GET",
-		data : {
-			"maxNum" : maxNum
-		},
 		success : function(data) {
-			if (maxNum == 0) {
-				maxNum = data;
-				return;
-			}
 			chartData.push(data);
 			chartLabels.push(data);
 
@@ -219,7 +211,6 @@ function chart() {
 				chartLabels.shift();
 			}
 			lineChart.update();
-			maxNum = maxNum + data;
 		},
 		error : function() {
 			alert("LineChart Error!");

@@ -12,14 +12,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.demo.DAO.TrafficDAO;
-import com.example.demo.VO.TrafficVO;
+import com.example.demo.dao.TrafficDAO;
+import com.example.demo.service.RedisService;
+import com.example.demo.vo.TrafficVO;
 
 @Controller
-public class AjaxController {
+public class TrafficController {
 	
 	@Autowired
 	private TrafficDAO traffic;
+	@Autowired
+	private RedisService redis;
 	
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String enter() {
@@ -40,15 +43,9 @@ public class AjaxController {
 	}
 
 	@RequestMapping(value = "/graph", method = RequestMethod.GET)
-	public @ResponseBody Object graph(int maxNum, HttpSession session) {
+	public @ResponseBody Object graph() {
 
-		if(maxNum == 0) return traffic.max();
-		
-		int cnt = traffic.cnt(maxNum);
-		
-		session.setAttribute("maxNum", maxNum+cnt);
-		
-		return cnt;
+		return redis.getCount();
 	}
 	
 	@RequestMapping(value = "/session", method = RequestMethod.GET)

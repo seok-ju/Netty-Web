@@ -10,7 +10,7 @@
 	overflow-y: auto;
 	height: 360px;
 }
-
+	
 .talbeFixHead thead th {
 	position: sticky;
 	top: 0;

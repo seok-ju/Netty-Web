@@ -5,28 +5,29 @@
 
 <mapper namespace="traffic">
 
-	<select id="cnt" parameterType="int" resultType="int">
-		select count(*) from TRAFFIC where num > #{maxNum}
-	</select>
-
-	<select id="max" resultType="int">
-		select max(num) from TRAFFIC
-	</select>
-
 	<select id="rank" resultType="Traffic">
-		select content, count(*) as num from
-		TRAFFIC group by content ORDER BY num desc;
+		SELECT content, cnt AS num FROM
+		ranking ORDER BY num DESC;
 	</select>
 
 	<select id="time" resultType="Traffic">
 		select time_h as num, COUNT(*) as
-		content FROM (SELECT DATE_FORMAT(endTime, '%H') AS time_h
-		FROM traffic WHERE DATE_FORMAT(endTime, '%Y-%m-%d') = CURDATE())tmp GROUP
+		content FROM (SELECT
+		DATE_FORMAT(endTime, '%H') AS time_h
+		FROM traffic <![CDATA[WHERE endTime >= curdate() and endTime < adddate(curdate(), 1)]]>)tmp
+		GROUP
 		BY time_h
 	</select>
 
 	<select id="search" parameterType="hashmap" resultType="Traffic">
-		SELECT * FROM traffic <![CDATA[WHERE date_format(endTime, '%Y-%m-%d %T') >= #{start} && date_format(endTime, '%Y-%m-%d %T') <= #{end}]]>
+		SELECT * FROM traffic <![CDATA[WHERE endTime >= #{start} and endTime <= #{end}]]>
 	</select>
+
+	<update id="rankUpdate">
+		UPDATE ranking AS T1, (SELECT content, COUNT(*) AS
+		cnt FROM traffic GROUP BY content) AS T2
+		SET T1.cnt = T2.cnt
+		WHERE T1.content = T2.content
+	</update>
 
 </mapper>
