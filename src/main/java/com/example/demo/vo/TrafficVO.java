@@ -6,16 +6,16 @@ import org.apache.ibatis.type.Alias;
 
 @Alias("Traffic")
 public class TrafficVO {
-	private int num;
+	private long num;
 	private String ip;
 	private int content;
 	private Timestamp startTime;
 	private Timestamp endTime;
 	
-	public int getNum() {
+	public long getNum() {
 		return num;
 	}
-	public void setNum(int num) {
+	public void setNum(long num) {
 		this.num = num;
 	}
 	public String getIp() {

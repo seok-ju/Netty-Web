@@ -16,4 +16,14 @@ public class ScheduleService {
 	public void updateRank() {
 		traffic.rankUpdate();
 	}
+	
+	@Scheduled(cron = "0 0 0 * * *")
+	public void resetTime() {
+		traffic.timeReset();
+	}
+	
+	@Scheduled(cron = "1 0/10 * * * *")
+	public void updateTime() {
+		traffic.timeUpdate();
+	}
 }

@@ -10,25 +10,12 @@ var barChart;
 
 $(document).ready(function() {
 	start();
-	setInterval("run()", 1000); // 주기 설정
+	setInterval("chart()", 1000); // 주기 설정 -1초
+	setInterval("rank()", 10000); // 10초
 });
 
-function run() {
-	chart();
+function start() {	
 	rank();
-}
-
-function start() {
-	$.ajax({
-		url: "session",
-		type: "GET",
-		success: function(data){
-			maxNum = data;
-		},
-		error: function(){
-			alert("session Error!")
-		}
-	});	
 	
 	// content Form 기본값 정의
 	$("#startDay").val(toDate(new Date()).slice(0, 10));
@@ -47,7 +34,7 @@ function start() {
 		data : {
 			labels : chartLabels,
 			datasets : [ {
-				label : "Test",
+				label : "Traffic",
 				lineTension : 0.3,
 				backgroundColor : "rgba(78, 115, 223, 0.05)",
 				borderColor : "rgba(78, 115, 223, 1)",
@@ -168,7 +155,7 @@ function time() {
 				barChart.update();
 			},
 			error : function() {
-				alert("BarChart Error!!");
+				/*alert("BarChart Error!!");*/
 			}
 		});
 	});
@@ -185,14 +172,14 @@ function content() {
 			$("#content").empty();
 			for (var i = 0; i < data.length; i++) {
 				var tr = $("<tr></tr>").appendTo($("#content"));
-				$("<td></td>").text(i + 1).appendTo(tr);
+				$("<td></td>").text(i+1).appendTo(tr);
 				$("<td></td>").text(data[i].ip).appendTo(tr);
 				$("<td></td>").text(toDate(data[i].startTime)).appendTo(tr);
 				$("<td></td>").text(toDate(data[i].endTime)).appendTo(tr);
 			}
 		},
 		error : function() {
-			alert("Content Error!");
+			/*alert("Content Error!");*/
 		}
 	});
 }
@@ -213,12 +200,11 @@ function chart() {
 			lineChart.update();
 		},
 		error : function() {
-			alert("LineChart Error!");
+			/*alert("LineChart Error!");*/
 		}
 	});
 }
 
-// 기존 값에 변화량만 더하여 갱신하고 싶다
 function rank() {
 	$.ajax({
 		url : "rank",
@@ -230,8 +216,11 @@ function rank() {
 
 				$("<th></th>").text(i + 1).appendTo(tr);
 				$("<td></td>").text(data[i].content).appendTo(tr);
-				$("<td></td>").text(data[i].num).appendTo(tr);
+				$("<td></td>").text(data[i].cnt).appendTo(tr);
 			}
+		},
+		error: function(){
+			
 		}
 	})
 }

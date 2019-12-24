@@ -13,6 +13,7 @@ public class RedisService {
 	
 	public int getCount() {
 		ValueOperations<String, String>vop = redis.opsForValue();
+		if(vop.get("newCount") == null) return 0;
 		int count = Integer.valueOf(vop.get("newCount"));
 		vop.set("newCount", "0");
 		
