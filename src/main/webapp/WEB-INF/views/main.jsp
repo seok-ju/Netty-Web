@@ -8,7 +8,7 @@
 <style>
 .tableFixHead {
 	overflow-y: auto;
-	height: 360px;
+	height: 350px;
 }
 
 .talbeFixHead thead th {
@@ -63,10 +63,7 @@
 				<div class="card shadow mb-4">
 					<div class="card-header py-3">
 						<h6 class="m-0 font-weight-bold text-primary">
-							시간별 트래픽
-							<button id="reChart" type="button"
-								class="btn-dark btn-sm float-right">새로고침</button>
-						</h6>
+							시간별 트래픽</h6>
 					</div>
 					<div class="card-body">
 						<div class="chart-bar">

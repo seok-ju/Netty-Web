@@ -12,11 +12,13 @@ $(document).ready(function() {
 	start();
 	setInterval("chart()", 1000); // 주기 설정 -1초
 	setInterval("rank()", 10000); // 10초
+	setInterval("time()", 60000); // 1분
 });
 
-function start() {	
+function start() {
+	time();
 	rank();
-	
+
 	// content Form 기본값 정의
 	$("#startDay").val(toDate(new Date()).slice(0, 10));
 	$("#startTime").val('00:00');
@@ -143,21 +145,19 @@ function start() {
 
 // Bar 새로고침 버튼 이벤트
 function time() {
-	$("#reChart").click(function() {
-		$.ajax({
-			url : "time",
-			type : "GET",
-			success : function(data) {
-				for ( var str in data) {
-					barData.shift();
-					barData.push(data[str]);
-				}
-				barChart.update();
-			},
-			error : function() {
-				/*alert("BarChart Error!!");*/
+	$.ajax({
+		url : "time",
+		type : "GET",
+		success : function(data) {
+			for ( var str in data) {
+				barData.shift();
+				barData.push(data[str]);
 			}
-		});
+			barChart.update();
+		},
+		error : function() {
+			/* alert("BarChart Error!!"); */
+		}
 	});
 }
 
@@ -172,14 +172,14 @@ function content() {
 			$("#content").empty();
 			for (var i = 0; i < data.length; i++) {
 				var tr = $("<tr></tr>").appendTo($("#content"));
-				$("<td></td>").text(i+1).appendTo(tr);
+				$("<td></td>").text(i + 1).appendTo(tr);
 				$("<td></td>").text(data[i].ip).appendTo(tr);
 				$("<td></td>").text(toDate(data[i].startTime)).appendTo(tr);
 				$("<td></td>").text(toDate(data[i].endTime)).appendTo(tr);
 			}
 		},
 		error : function() {
-			/*alert("Content Error!");*/
+			/* alert("Content Error!"); */
 		}
 	});
 }
@@ -200,7 +200,7 @@ function chart() {
 			lineChart.update();
 		},
 		error : function() {
-			/*alert("LineChart Error!");*/
+			/* alert("LineChart Error!"); */
 		}
 	});
 }
@@ -219,8 +219,8 @@ function rank() {
 				$("<td></td>").text(data[i].cnt).appendTo(tr);
 			}
 		},
-		error: function(){
-			
+		error : function() {
+
 		}
 	})
 }

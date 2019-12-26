@@ -22,7 +22,7 @@ public class ScheduleService {
 		traffic.timeReset();
 	}
 	
-	@Scheduled(cron = "1 0/10 * * * *")
+	@Scheduled(cron = "0/30 * * * * *")
 	public void updateTime() {
 		traffic.timeUpdate();
 	}

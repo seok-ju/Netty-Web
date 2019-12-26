@@ -18,27 +18,27 @@ public class TrafficDAO {
 	private SqlSessionTemplate session;
 	
 	public List<TrafficVO> search(Map<String, String> content) {
-		return session.selectList("traffic.search", content);
+		return session.selectList("search", content);
 	}
 	
 	public List<RankingVO> rank() {
-		return session.selectList("traffic.rank");		
+		return session.selectList("rank");		
 	}
 	
 	public void rankUpdate() {
-		session.update("traffic.updateRank");
+		session.update("updateRank");
 	}
 	
 	public List<TimehVO> time() {
-		return session.selectList("traffic.time");
+		return session.selectList("time");
 	}
 	
 	public void timeReset() {
-		session.update("traffic.resetTime");
+		session.update("resetTime");
 	}
 	
 	public void timeUpdate() {
-		session.update("traffic.updateTime");
+		session.update("updateTime");
 	}
 	
 }

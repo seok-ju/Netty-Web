@@ -13,9 +13,13 @@ public class RedisService {
 	
 	public int getCount() {
 		ValueOperations<String, String>vop = redis.opsForValue();
-		if(vop.get("newCount") == null) return 0;
-		int count = Integer.valueOf(vop.get("newCount"));
-		vop.set("newCount", "0");
+		
+		long key = (System.currentTimeMillis() / 1000) % 10 - 1;
+		if(key < 0) key += 10;
+				
+		if(vop.get(String.valueOf(key)) == null) return 0;
+		int count = Integer.valueOf(vop.get(String.valueOf(key)));
+		vop.set(String.valueOf(key), "0");
 		
 		return count;		
 	}
